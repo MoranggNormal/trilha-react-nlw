@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import '../styles/auth.scss';
 
 export default function NewRoom () {
+
   return (
     <div id="page-auth">
     <aside>
