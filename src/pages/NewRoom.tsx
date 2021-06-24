@@ -1,4 +1,6 @@
 import { useAuth } from "../Hooks/useAuths";
+import { FormEvent, useState } from "react";
+import { database } from '../services/firebase';
 
 
 import IllustrationImg from "../assets/images/illustration.svg";
@@ -8,6 +10,25 @@ import { Link } from "react-router-dom";
 import "../styles/auth.scss";
 
 export default function NewRoom() {
+
+  const [newRoom, setNewRoom] = useState('');
+
+  async function handleCreateRoom(e: FormEvent) {
+    e.preventDefault();
+
+    if(newRoom.trim() === ''){
+      return;
+    }
+
+    const roomRef = database.ref('rooms');
+
+    const firebaseRoom = await roomRef.push({
+      title: newRoom,
+      authorId: user?.id
+    })
+
+  }
+
 
   const {user, signInWithGoogle} = useAuth()
 
@@ -28,8 +49,13 @@ export default function NewRoom() {
           <img src={logoImg} alt="Letmeask" />
           {user && <h1>Bem vindo de volta, {user?.name}</h1>}
           <h2>Criar uma nova sala</h2>
-          <form>
-            <input type="text" placeholder="Digite o nome da sala" />
+
+          <form onSubmit={handleCreateRoom}>
+            <input
+             type="text"
+             placeholder="Digite o nome da sala"
+             onChange={e => setNewRoom(e.target.value)}
+             value={newRoom}/>
             <Button type="submit">Criar na sala</Button>
           </form>
           <p>
