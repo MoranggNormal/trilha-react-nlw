@@ -1,5 +1,4 @@
-import { useContext } from "react";
-import { AuthContext } from "../App";
+import { useAuth } from "../Hooks/useAuths";
 
 
 import IllustrationImg from "../assets/images/illustration.svg";
@@ -10,7 +9,7 @@ import "../styles/auth.scss";
 
 export default function NewRoom() {
 
-  const {user, signInWithGoogle} = useContext(AuthContext)
+  const {user, signInWithGoogle} = useAuth()
 
 
   return (
